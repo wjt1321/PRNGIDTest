@@ -1,0 +1,45 @@
+These are quick descriptions for each script I wrote.
+Please note, I did not expect other people to view this, I worked 
+constantly on this for quite some time and some of it is very speghetti code 
+in nature. If you have any questions feel free to ask me.
+
+
+python scripts
+scikitModels - This was my main testing area. The script contains various models 
+				and analysis's from the scikit learn library. I tried to add some 
+				comments around the different functions to explain them 
+lfg_mlfg_compare - this script compares subsets of the lfg and mlfg generators by
+					the parameters, attempting to see seperation between them. This 
+					script could be useful in trying to predict parameters for a given
+					generator.
+csvcombiner - this code I modified from a chatgpt prompt because I was super lazy. The script
+				to generate the results outputs them as a new excel file with 1 row. this script
+				combines them all vertically. please see moutput vs output for the 2nd step of processng
+				that is neccessary
+data_dsc - this script provides summary tables about the data, I used this to dynamically create these tables 
+			for tracking purposes and in my final paper 
+confintervals - this was my initial classification attempt. I sought to use the number of confidence intervals the 
+				test data was inside to predict the class most similar. It was around 60% accurate, it fails because 
+				it assumes equal feature weight. 
+prngNN - this is a google collab script for a neural network, it was about 70% accurate. I reccomend tweaking it,
+			I think for more data it could become a stronger model if the right architecture is implemented.
+permutationimportance - this script uses a variation of the best preforming model to rank the importances of each feature.
+
+data creation
+bigcrushone- this is the c++ script I used to create the data, christoph used this and another script to batch the jobs
+			each completion of this script results in 1 row of data.
+output vs moutput - The headers from testu01 are not unique. therefor it was neccessary to output without the headers and 
+					use numeric headers (1-109) instead. output has these headers. We went through and modified the headers
+					from testu01 to make them unique based on the test parameters. The modified headers are present in moutput.
+					the numeric headers are present in output. 
+feature extraction note - I used a chi^2 for independence test to select the n most important features. I found this was the best
+							method of lowering the total number of features.
+sql
+creationScript - I am working on creatin an applet that displays confidence intervals for each generator/parameter combo along with 
+				average pass/fail rates. I started composing a sql database, I havent gotten far on this but I attached what I have
+docs:
+graphs - these are saved versions of various graphs, I highly reccomend creating variations of these if you add more data.
+descriptions - this is what you are reading
+research poster - this poster contains similar infomation to the paper, but less words.
+
+Original work by Jarrett Kizer and Christoph Hagenauer
