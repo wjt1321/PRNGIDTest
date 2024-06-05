@@ -70,6 +70,19 @@ import matplotlib.transforms as transforms
 #
 #print(82 * "_")
 
+    #### Global vars
+
+    #np.random.seed(31415)
+n_digits = 6
+dfraw = pd.read_csv("output.csv")
+#print(dfraw)
+data = dfraw.drop(["0","1","2","109"],axis = "columns")
+labels = dfraw["0"]
+#print(data)
+mapping = {'CMRG': 0, 'LCG': 1,'LCG64':2,'LFG':3,'MLFG':4,'PMLCG':5}
+mlabels =labels.replace(mapping)
+OMP_NUM_THREADS = 5
+colormaps = {"CMRG":"blue","LCG":"orange","LCG64":"orchid","LFG":"maroon","MLFG":"green","PMLCG":"saddlebrown"}
 
 
 
@@ -729,9 +742,9 @@ def vote(data, labels,weights = [3,4,2,1]):
 
     dat = SelectKBest(chi2,k=23).fit_transform(data,labels)
     #dat = StandardScaler().fit_transform(datm,labels)#, fit_params)
-    labelFam = {"CMRG":"CMRG","LCG":"LCG","LCG64":"LCG64","LFG":"COMBINED_LFG","MLFG":"COMBINED_LFG","PMLCG":"PMLCG"}
+    #labelFam = {"CMRG":"CMRG","LCG":"LCG","LCG64":"LCG64","LFG":"COMBINED_LFG","MLFG":"COMBINED_LFG","PMLCG":"PMLCG"}
     # Split the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(dat, labels.replace(labelFam), test_size=0.25, random_state=42, stratify=labels)
+    X_train, X_test, y_train, y_test = train_test_split(dat, labels, test_size=0.25, random_state=42, stratify=labels)
     #X_train, X_test, y_train, y_test = train_test_split(dat, labels, test_size=0.25, random_state=42, stratify=labels)
     
     # Define individual classifiers
@@ -886,7 +899,7 @@ def rocauc(datad,labels):
     #skb = SelectKBest(chi2, k=15)#n_components=2)
    #knn = KNeighborsClassifier(n_neighbors=14)
     hist_gradient_boosting = HistGradientBoostingClassifier(max_leaf_nodes=31,min_samples_leaf=20,interaction_cst="pairwise",l2_regularization=0.6,random_state=42,class_weight="balanced")
-    gradient_boosting = GradientBoostingClassifier(n_estimators=150,min_samples_leaf=20, max_leaf_nodes=15,random_state=42,verbose=1)
+    #gradient_boosting = GradientBoostingClassifier(n_estimators=150,min_samples_leaf=20, max_leaf_nodes=15,random_state=42,verbose=1)
     #ada = AdaBoostClassifier(algorithm = 'SAMME',n_estimators=100,random_state=42)
     random_forest = RandomForestClassifier(random_state=42,class_weight="balanced")
     decision_tree = DecisionTreeClassifier(criterion="log_loss",splitter="best",min_samples_split=2,min_samples_leaf=20, max_leaf_nodes=21,class_weight="balanced")
@@ -964,20 +977,6 @@ def rocauc(datad,labels):
     plt.show()
 
 def main():
-    #### Global vars
-
-    #np.random.seed(31415)
-    n_digits = 6
-    dfraw = pd.read_csv("output.csv")
-    #print(dfraw)
-    data = dfraw.drop(["0","1","2","109"],axis = "columns")
-    labels = dfraw["0"]
-    #print(data)
-    mapping = {'CMRG': 0, 'LCG': 1,'LCG64':2,'LFG':3,'MLFG':4,'PMLCG':5}
-    mlabels =labels.replace(mapping)
-    OMP_NUM_THREADS = 5
-    colormaps = {"CMRG":"blue","LCG":"orange","LCG64":"orchid","LFG":"maroon","MLFG":"green","PMLCG":"saddlebrown"}
-
     #reduced_data = PCA(n_components=2).fit_transform(data)
     #kmeans = KMeans(init="k-means++", n_clusters=6, n_init=4)
     #kmeans.fit(reduced_data)
@@ -991,7 +990,7 @@ def main():
     #print(82 * "_")
     #pcagraph()
     
-    #weight1 = vote(data,labels)
+    weight1 = vote(data,labels)
     #print(82 * "_")
     #vote(weight1)
     #print(82 * "_")
